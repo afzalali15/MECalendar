@@ -22,5 +22,5 @@ CalendarView can be used in any Layout like below:
 ```
 Don't forget to mention reference 
 ```xml
-xmlns:calendar="clr-namespace:CalendarView;assembly=mecalendar"
+xmlns:calendar="clr-namespace:CalendarView;assembly=MECalendar"
 ```
