@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="CalendarView.DayCell">
+    <ContentView.Content>
+        <Grid
+            BackgroundColor="White"
+            HorizontalOptions="Start"
+            VerticalOptions="Start">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <BoxView
+                x:Name="DateBackground"
+                Grid.Row="0"
+                Grid.Column="0"
+                HeightRequest="24"
+                WidthRequest="48" />
+            <Label
+                x:Name="lbl_day"
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalOptions="CenterAndExpand" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>
