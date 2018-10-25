@@ -1,21 +1,26 @@
 # MECalendar
 CalendarView with Gregorian, Hijri, and Arabic calendar support. Specailly designed for Middle East languages. Can be used globally for Gregorian calendar
 
+## Screenshots
+### Gregorian Arabic |  Gregorian English |     Hijri
+<img src="https://preview.ibb.co/mbVEaq/Arabic-Greg.png" width="200" height="200" /><img src="https://preview.ibb.co/mqQSTA/Greg.png" width="200" height="200" /><img src="https://preview.ibb.co/mPeRMV/Arabic-Hijri.png" width="200" height="200" />
+
 ## Installation
-Install [MECalendar](https://www.nuget.org/packages/MECalendar/) NuGet package on Portable/Shared project.
+Install [MECalendar](https://www.nuget.org/packages/MECalendar/) NuGet package on Portable/Shared project.<br/>
+*Note: Xamarin Forms 3.2+ is required to install this package.*
 
 ## Usage
 CalendarView can be used in any Layout like below:
-```
-        <calendar:CalendarView
-            CalendarType="ArabicGregorian"
-            StartDayOfWeek="Sunday"
-            WeekendDays="Friday,Saturday"
-            DayColor="Black"
-            WeekendDayColor="Gray"
-            SelectedDayColor="Red" />
+```xml
+<calendar:CalendarView
+        CalendarType="ArabicGregorian"
+        StartDayOfWeek="Sunday"
+        WeekendDays="Friday,Saturday"
+        DayColor="Black"
+        WeekendDayColor="Gray"
+        SelectedDayColor="Red" />
 ```
 Don't forget to mention reference 
-```
-    xmlns:calendar="clr-namespace:CalendarView;assembly=mecalendar"
+```xml
+xmlns:calendar="clr-namespace:CalendarView;assembly=mecalendar"
 ```
