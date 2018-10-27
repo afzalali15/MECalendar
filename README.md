@@ -1,4 +1,5 @@
-# MECalendar 0.1.1
+# MECalendar [![NuGet](https://img.shields.io/badge/NuGet-v0.1.1-blue.svg)](https://www.nuget.org/packages/MECalendar/)
+
 CalendarView with Gregorian, Hijri, and Arabic calendar support. Specailly designed for Middle East languages. Can be used globally for Gregorian calendar
 
 ## Screenshots
@@ -6,7 +7,9 @@ CalendarView with Gregorian, Hijri, and Arabic calendar support. Specailly desig
 <img src="https://preview.ibb.co/mbVEaq/Arabic-Greg.png" width="200" height="200" /><img src="https://preview.ibb.co/mqQSTA/Greg.png" width="200" height="200" /><img src="https://preview.ibb.co/mPeRMV/Arabic-Hijri.png" width="200" height="200" />
 
 ## Installation
-Install [MECalendar](https://www.nuget.org/packages/MECalendar/) NuGet package on Portable/Shared project.<br/>
+* Available on NuGet: https://www.nuget.org/packages/MECalendar [![NuGet](https://img.shields.io/badge/NuGet-v0.1.1-blue.svg)](https://www.nuget.org/packages/MECalendar/)
+
+Install NuGet package on Portable/Shared project.<br/>
 *Note: Xamarin Forms 3.2+ is required to install this package.*
 
 ## Usage
