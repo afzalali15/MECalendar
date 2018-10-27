@@ -1,4 +1,4 @@
-# MECalendar
+# MECalendar 0.1.1
 CalendarView with Gregorian, Hijri, and Arabic calendar support. Specailly designed for Middle East languages. Can be used globally for Gregorian calendar
 
 ## Screenshots
@@ -16,6 +16,8 @@ CalendarView can be used in any Layout like below:
         CalendarType="ArabicGregorian"
         StartDayOfWeek="Sunday"
         WeekendDays="Friday,Saturday"
+        DateSelected="{Binding DateSelectedCommand}"
+        MonthChanged="{Binding MonthChangedCommand}"
         DayColor="Black"
         WeekendDayColor="Gray"
         SelectedDayColor="Red" />
