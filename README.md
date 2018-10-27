@@ -26,3 +26,5 @@ Don't forget to mention reference
 ```xml
 xmlns:calendar="clr-namespace:CalendarView;assembly=MECalendar"
 ```
+## Documentation
+Refer [Wiki](https://github.com/afzalali15/MECalendar/wiki) for detailed documentation about the changes.
