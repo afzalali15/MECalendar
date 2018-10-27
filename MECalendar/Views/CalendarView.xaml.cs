@@ -10,17 +10,13 @@ using System.Linq;
 using System.Diagnostics;
 using System.Globalization;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace CalendarView
 {
-    public partial class CalendarView : ContentView, INotifyPropertyChanged
+    public partial class CalendarView : ContentView
     {
         #region Properties
-        //static Color DayColor = Color.Black;
-        //static Color WeekendDayColor = DayColor.MultiplyAlpha(0.5);
-        //static Color SelectedDayColor = Color.Red;
-        //static Color SelectedDayBGColor = Color.FromRgb(51, 153, 255);
-
         public Color DayColor
         {
             get { return (Color)GetValue(DayColorProperty); }
@@ -129,6 +125,11 @@ namespace CalendarView
         );
         static void EventsChanged(BindableObject bindable, object oldValue, object newValue)
         {
+            if (oldValue == null)
+            {
+                throw new ArgumentNullException(nameof(oldValue));
+            }
+
             var control = (CalendarView)bindable;
             control.Events = newValue as List<CalendarEvent>;
         }
@@ -199,7 +200,10 @@ namespace CalendarView
 
         public DateTime InitialDate
         {
-            get { return (DateTime)GetValue(InitialDateProperty); }
+            get
+            {
+                return (DateTime)GetValue(InitialDateProperty);
+            }
             set
             {
                 SetValue(InitialDateProperty, value);
@@ -222,7 +226,26 @@ namespace CalendarView
             }
         }
 
-        public event EventHandler<DateSelectionArgs> OnDateSelected;
+        public static readonly BindableProperty DateSelectedProperty = BindableProperty.Create(
+            nameof(DateSelected),
+            typeof(ICommand),
+            typeof(CalendarView));
+        public ICommand DateSelected
+        {
+            get { return (ICommand)GetValue(DateSelectedProperty); }
+            set { SetValue(DateSelectedProperty, value); }
+        }
+
+        public static readonly BindableProperty MonthChangedProperty = BindableProperty.Create(
+            nameof(MonthChanged),
+            typeof(ICommand),
+            typeof(CalendarView));
+        public ICommand MonthChanged
+        {
+            get { return (ICommand)GetValue(MonthChangedProperty); }
+            set { SetValue(MonthChangedProperty, value); }
+        }
+
         DateTime _currentDateInfo;
         public DateTime CurrentDateInfo
         {
@@ -288,11 +311,7 @@ namespace CalendarView
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+
 
         HashSet<int> cellIndexesToClean;
         HashSet<int> columnIndexOfWeekend;
@@ -318,7 +337,7 @@ namespace CalendarView
                     var day = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), dayString);
                     columnIndexOfWeekend.Add(GetFirstDateIndex(day));
                 }
-                catch (ArgumentException argEx)
+                catch (ArgumentException)
                 {
                     throw new Exception("Please provide correct DayOfWeek for WeekendDays property.");
                 }
@@ -369,37 +388,34 @@ namespace CalendarView
             {
                 case CalendarType.Gregorian:
                     PopulateGregorianCalendar(0);
-                    MonthYearInfoCol = 0;
-                    MonthActionCol = 1;
-                    MonthYearAlighment = LayoutOptions.Start;
-                    MonthActionAlighment = LayoutOptions.End;
-                    TodayLabel = "Today";
+                    lbl_month.HorizontalOptions = LayoutOptions.StartAndExpand;
+                    lyt_actions.HorizontalOptions = LayoutOptions.End;
+                    lbl_today.Text = "Today";
                     break;
                 case CalendarType.Hijri:
                     PopulateHijriCalendar(0);
-                    MonthYearInfoCol = 1;
-                    MonthActionCol = 0;
-                    MonthYearAlighment = LayoutOptions.End;
-                    MonthActionAlighment = LayoutOptions.Start;
-                    TodayLabel = "اليوم";
+                    lbl_month.HorizontalOptions = LayoutOptions.EndAndExpand;
+                    lyt_actions.HorizontalOptions = LayoutOptions.Start;
+                    lbl_today.Text = "اليوم";
                     break;
                 case CalendarType.ArabicGregorian:
                     PopulateArabicGregCalendar(0);
-                    MonthYearInfoCol = 1;
-                    MonthActionCol = 0;
-                    MonthYearAlighment = LayoutOptions.End;
-                    MonthActionAlighment = LayoutOptions.Start;
-                    TodayLabel = "اليوم";
+                    lbl_month.HorizontalOptions = LayoutOptions.EndAndExpand;
+                    lyt_actions.HorizontalOptions = LayoutOptions.Start;
+                    lbl_today.Text = "اليوم";
                     break;
                 default:
                     PopulateGregorianCalendar(0);
+                    lbl_month.HorizontalOptions = LayoutOptions.StartAndExpand;
+                    lyt_actions.HorizontalOptions = LayoutOptions.End;
+                    lbl_today.Text = "Today";
                     break;
             }
 
             //var arg = new DateSelectionArgs();
             //arg.SelectedDate = DateTime.Today;
             //arg.Events = Events.Where(events => events.EventDate.Equals(DateTime.Today)).ToList();
-            //OnDateSelected?.Invoke(null, arg);
+            //DateSelected?.Execute(arg);
 
             //reset last selected info
             indexOfLastSelectedDate = 0;
@@ -409,13 +425,10 @@ namespace CalendarView
         public CalendarView()
         {
             InitializeComponent();
-            this.BindingContext = this;
+            //BindingContext = this;
             cellIndexesToClean = new HashSet<int>();
             columnIndexOfWeekend = new HashSet<int>();
             CurrentDateInfo = InitialDate;
-
-            var arabicDate = DateTime.Now.ToString("dd/MMMM/yyyy", new CultureInfo("ar-SA").DateTimeFormat);
-            Debug.WriteLine(arabicDate.ToString());
         }
 
         void PopulateGregorianCalendar(int monthsToAdd)
@@ -458,7 +471,7 @@ namespace CalendarView
                     colorOfLastSelectedDate = (arg1 as CalendarCell).Color;
                     indexOfLastSelectedDate = grd_calendar.Children.IndexOf(arg1 as CalendarCell);
                     (arg1 as CalendarCell).Color = SelectedDayColor;
-                    OnDateSelected?.Invoke(arg1, arg);
+                    DateSelected?.Execute(arg);
                 }));
 
                 calendarCell.Day = i.ToString();
@@ -499,14 +512,23 @@ namespace CalendarView
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
+            int firstHijriDate, index, daysInMonth;
+            DateTime firstDayOfMonth;
             CurrentDateInfo = CurrentDateInfo.AddMonths(monthsToAdd);
-            var firstHijriDate = Convert.ToInt32(CurrentDateInfo.ToString("dd", new CultureInfo("ar-SA").DateTimeFormat));
+            try
+            {
+                firstHijriDate = Convert.ToInt32(CurrentDateInfo.ToString("dd", new CultureInfo("ar-SA").DateTimeFormat));
 
-            var firstDayOfMonth = CurrentDateInfo.AddDays(-(firstHijriDate - 1));
-            var index = GetFirstDateIndex(firstDayOfMonth.DayOfWeek);
+                firstDayOfMonth = CurrentDateInfo.AddDays(-(firstHijriDate - 1));
+                index = GetFirstDateIndex(firstDayOfMonth.DayOfWeek);
 
-            lbl_month.Text = GetArabicNumbers(CurrentDateInfo.ToString("MMMM yyyy", new CultureInfo("ar-SA").DateTimeFormat));
-            var daysInMonth = HijriDaysInMonth(firstDayOfMonth);
+                lbl_month.Text = GetArabicNumbers(CurrentDateInfo.ToString("MMMM yyyy", new CultureInfo("ar-SA").DateTimeFormat));
+                daysInMonth = HijriDaysInMonth(firstDayOfMonth);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new ArgumentOutOfRangeException("Provided date is not valid for Hijri Calendar", ex);
+            }
 
             //Clear cells which are coming Right side of ArabicDate => 1
             for (int i = 0; i < 7; i++)
@@ -542,7 +564,8 @@ namespace CalendarView
                     colorOfLastSelectedDate = (arg1 as CalendarCell).Color;
                     indexOfLastSelectedDate = grd_calendar.Children.IndexOf(arg1 as CalendarCell);
                     (arg1 as CalendarCell).Color = SelectedDayColor;
-                    OnDateSelected?.Invoke(arg1, arg);
+                    //OnDateSelected?.Invoke(arg1, arg);
+                    DateSelected?.Execute(arg);
                 }));
 
                 calendarCell.Day = GetArabicNumbers(i.ToString());
@@ -624,7 +647,8 @@ namespace CalendarView
                     colorOfLastSelectedDate = (arg1 as CalendarCell).Color;
                     indexOfLastSelectedDate = grd_calendar.Children.IndexOf(arg1 as CalendarCell);
                     (arg1 as CalendarCell).Color = SelectedDayColor;
-                    OnDateSelected?.Invoke(arg1, arg);
+                    //OnDateSelected?.Invoke(arg1, arg);
+                    DateSelected?.Execute(arg);
                 }));
 
                 calendarCell.Day = GetArabicNumbers(i.ToString());
@@ -705,22 +729,26 @@ namespace CalendarView
             {
                 case CalendarType.Gregorian:
                     PopulateGregorianCalendar(1);
+                    MonthChanged?.Execute(1);
                     break;
                 case CalendarType.Hijri:
                     PopulateHijriCalendar(-1);
+                    MonthChanged?.Execute(-1);
                     break;
                 case CalendarType.ArabicGregorian:
                     PopulateArabicGregCalendar(-1);
+                    MonthChanged?.Execute(-1);
                     break;
                 default:
                     PopulateGregorianCalendar(1);
+                    MonthChanged?.Execute(1);
                     break;
             }
         }
 
         void Handle_TodayClicked(object sender, System.EventArgs e)
         {
-            var monthDiff = -(CurrentDateInfo - DateTime.Now).Days / 30;
+            var monthDiff = Convert.ToInt32(Math.Round(-(CurrentDateInfo - DateTime.Now).Days / 30.42));
             if (monthDiff == 0)
                 return;
             switch (CalendarType)
@@ -738,6 +766,7 @@ namespace CalendarView
                     PopulateGregorianCalendar(monthDiff);
                     break;
             }
+            MonthChanged?.Execute(monthDiff);
         }
 
         void Handle_PreviousClicked(object sender, System.EventArgs e)
@@ -746,15 +775,19 @@ namespace CalendarView
             {
                 case CalendarType.Gregorian:
                     PopulateGregorianCalendar(-1);
+                    MonthChanged?.Execute(-1);
                     break;
                 case CalendarType.Hijri:
                     PopulateHijriCalendar(1);
+                    MonthChanged?.Execute(1);
                     break;
                 case CalendarType.ArabicGregorian:
                     PopulateArabicGregCalendar(1);
+                    MonthChanged?.Execute(1);
                     break;
                 default:
                     PopulateGregorianCalendar(-1);
+                    MonthChanged?.Execute(-1);
                     break;
             }
         }

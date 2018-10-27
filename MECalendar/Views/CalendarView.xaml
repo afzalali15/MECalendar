@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentView
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -15,16 +15,18 @@
                         Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label
-                    Grid.Row="0"
-                    Grid.Column="{Binding MonthYearInfoCol}"
                     x:Name="lbl_month"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
                     FontAttributes="Bold"
-                    HorizontalOptions="{Binding MonthYearAlighment}"
                     VerticalOptions="Center" />
                 <StackLayout
+                    x:Name="lyt_actions"
                     Grid.Row="0"
-                    Grid.Column="{Binding MonthActionCol}"
-                    HorizontalOptions="{Binding MonthActionAlighment}"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="End"
                     Orientation="Horizontal">
                     <Button
                         Clicked="Handle_PreviousClicked"
@@ -32,8 +34,8 @@
                         BackgroundColor="Transparent"
                         Text="&lt;" />
                     <Button
+                        x:Name="lbl_today"
                         Clicked="Handle_TodayClicked"
-                        Text="{Binding TodayLabel}"
                         FontAttributes="Bold"
                         HorizontalOptions="End"
                         VerticalOptions="Center" />
