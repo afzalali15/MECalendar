@@ -13,13 +13,13 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
     <PackageId>MECalendar</PackageId>
-    <PackageVersion>0.1.0</PackageVersion>
+    <PackageVersion>0.1.1</PackageVersion>
     <Authors>Afzal</Authors>
     <Description>CalendarView with Gregorian, Hijri, and Arabic calendar support. Specailly designed for Middle East languages. Can be used globally for Gregorian calendar</Description>
-    <PackageIconUrl>https://cdn0.iconfinder.com/data/icons/customicondesign-office7-shadow-png/256/Calendar.png</PackageIconUrl>
+    <PackageIconUrl>https://image.ibb.co/kOeuwV/MECalendar.png</PackageIconUrl>
     <Owners>Afzal</Owners>
     <PackageProjectUrl>https://github.com/afzalali15/MECalendar</PackageProjectUrl>
-    <Summary>CalendarView with Gregorian, Hijri, and Arabic calendar support. Specailly designed for Middle East languages. Can be used globally for Gregorian calendar</Summary>
+    <Summary>CalendarView with Gregorian, Hijri, and Arabic calendar support. Specially designed for Middle East languages. Can be used globally for Gregorian calendar</Summary>
     <Title>MECalendar</Title>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
