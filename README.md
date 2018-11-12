@@ -31,3 +31,8 @@ xmlns:calendar="clr-namespace:CalendarView;assembly=MECalendar"
 ```
 ## Documentation
 Refer [Wiki](https://github.com/afzalali15/MECalendar/wiki) for detailed documentation about the changes.
+
+
+## Future Scope
+* MultiCalendarView, Hijri and Gregorian in the same calendar view.
+<img src="https://image.ibb.co/j1ZgdV/Screen-Shot-2018-11-11-at-11-33-49-PM.png" width="200" height="200" />
