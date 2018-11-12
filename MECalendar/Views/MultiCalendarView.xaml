@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:local="clr-namespace:CalendarView"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="CalendarView.MultiCalendarView">
+    <ContentView.Content>
+        <StackLayout
+            Padding="16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    x:Name="lbl_month"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center" />
+                <Label
+                    x:Name="lbl_sec_month"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontSize="Small"
+                    VerticalOptions="Center" />
+                <StackLayout
+                    x:Name="lyt_actions"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="End"
+                    Orientation="Horizontal">
+                    <Button
+                        Clicked="Handle_PreviousClicked"
+                        HorizontalOptions="End"
+                        BackgroundColor="Transparent"
+                        Text="&lt;" />
+                    <Button
+                        x:Name="lbl_today"
+                        Clicked="Handle_TodayClicked"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center" />
+                    <Button
+                        Clicked="Handle_NextClicked"
+                        HorizontalOptions="End"
+                        BackgroundColor="Transparent"
+                        Text="&gt;" />
+                </StackLayout>
+            </Grid>
+            <Grid
+                x:Name="grd_days"
+                ColumnSpacing="0"
+                RowSpacing="1"
+                VerticalOptions="Start"
+                HorizontalOptions="Center">
+                <local:DayCell
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    FontSize="10" />
+                <local:DayCell
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    FontSize="10" />
+                <local:DayCell
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    FontSize="10" />
+                <local:DayCell
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    FontSize="10" />
+                <local:DayCell
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    FontSize="10" />
+                <local:DayCell
+                    Grid.Row="0"
+                    Grid.Column="5"
+                    FontSize="10" />
+                <local:DayCell
+                    Grid.Row="0"
+                    Grid.Column="6"
+                    FontSize="10" />
+            </Grid>
+            <Grid
+                x:Name="grd_calendar"
+                ColumnSpacing="0"
+                RowSpacing="1"
+                VerticalOptions="Start"
+                HorizontalOptions="Center">
+                <!--            First Row-->
+                <local:MultiCalendarCell
+                    Grid.Row="0"
+                    Grid.Column="0" />
+                <local:MultiCalendarCell
+                    Grid.Row="0"
+                    Grid.Column="1" />
+                <local:MultiCalendarCell
+                    Grid.Row="0"
+                    Grid.Column="2" />
+                <local:MultiCalendarCell
+                    Grid.Row="0"
+                    Grid.Column="3" />
+                <local:MultiCalendarCell
+                    Grid.Row="0"
+                    Grid.Column="4" />
+                <local:MultiCalendarCell
+                    Grid.Row="0"
+                    Grid.Column="5" />
+                <local:MultiCalendarCell
+                    Grid.Row="0"
+                    Grid.Column="6" />
+                <!--            Second Row-->
+                <local:MultiCalendarCell
+                    Grid.Row="1"
+                    Grid.Column="0" />
+                <local:MultiCalendarCell
+                    Grid.Row="1"
+                    Grid.Column="1" />
+                <local:MultiCalendarCell
+                    Grid.Row="1"
+                    Grid.Column="2" />
+                <local:MultiCalendarCell
+                    Grid.Row="1"
+                    Grid.Column="3" />
+                <local:MultiCalendarCell
+                    Grid.Row="1"
+                    Grid.Column="4" />
+                <local:MultiCalendarCell
+                    Grid.Row="1"
+                    Grid.Column="5" />
+                <local:MultiCalendarCell
+                    Grid.Row="1"
+                    Grid.Column="6" />
+                <!--            Third Row-->
+                <local:MultiCalendarCell
+                    Grid.Row="2"
+                    Grid.Column="0" />
+                <local:MultiCalendarCell
+                    Grid.Row="2"
+                    Grid.Column="1" />
+                <local:MultiCalendarCell
+                    Grid.Row="2"
+                    Grid.Column="2" />
+                <local:MultiCalendarCell
+                    Grid.Row="2"
+                    Grid.Column="3" />
+                <local:MultiCalendarCell
+                    Grid.Row="2"
+                    Grid.Column="4" />
+                <local:MultiCalendarCell
+                    Grid.Row="2"
+                    Grid.Column="5" />
+                <local:MultiCalendarCell
+                    Grid.Row="2"
+                    Grid.Column="6" />
+                <!--            Fourth Row-->
+                <local:MultiCalendarCell
+                    Grid.Row="3"
+                    Grid.Column="0" />
+                <local:MultiCalendarCell
+                    Grid.Row="3"
+                    Grid.Column="1" />
+                <local:MultiCalendarCell
+                    Grid.Row="3"
+                    Grid.Column="2" />
+                <local:MultiCalendarCell
+                    Grid.Row="3"
+                    Grid.Column="3" />
+                <local:MultiCalendarCell
+                    Grid.Row="3"
+                    Grid.Column="4" />
+                <local:MultiCalendarCell
+                    Grid.Row="3"
+                    Grid.Column="5" />
+                <local:MultiCalendarCell
+                    Grid.Row="3"
+                    Grid.Column="6" />
+                <!--            Fifth Row-->
+                <local:MultiCalendarCell
+                    Grid.Row="4"
+                    Grid.Column="0" />
+                <local:MultiCalendarCell
+                    Grid.Row="4"
+                    Grid.Column="1" />
+                <local:MultiCalendarCell
+                    Grid.Row="4"
+                    Grid.Column="2" />
+                <local:MultiCalendarCell
+                    Grid.Row="4"
+                    Grid.Column="3" />
+                <local:MultiCalendarCell
+                    Grid.Row="4"
+                    Grid.Column="4" />
+                <local:MultiCalendarCell
+                    Grid.Row="4"
+                    Grid.Column="5" />
+                <local:MultiCalendarCell
+                    Grid.Row="4"
+                    Grid.Column="6" />
+                <!--            Sixth Row-->
+                <local:MultiCalendarCell
+                    Grid.Row="5"
+                    Grid.Column="0" />
+                <local:MultiCalendarCell
+                    Grid.Row="5"
+                    Grid.Column="1" />
+                <local:MultiCalendarCell
+                    Grid.Row="5"
+                    Grid.Column="2" />
+                <local:MultiCalendarCell
+                    Grid.Row="5"
+                    Grid.Column="3" />
+                <local:MultiCalendarCell
+                    Grid.Row="5"
+                    Grid.Column="4" />
+                <local:MultiCalendarCell
+                    Grid.Row="5"
+                    Grid.Column="5" />
+                <local:MultiCalendarCell
+                    Grid.Row="5"
+                    Grid.Column="6" />
+            </Grid>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

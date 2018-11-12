@@ -43,37 +43,52 @@
     <Compile Include="Enums\CalendarType.cs" />
     <Compile Include="Events\DateSelectionArgs.cs" />
     <Compile Include="Models\CalendarEvent.cs" />
+    <Compile Include="Views\MultiCalendarView.xaml.cs">
+      <DependentUpon>MultiCalendarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cells\CalendarCell.xaml.cs">
+      <DependentUpon>CalendarCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cells\DayCell.xaml.cs">
+      <DependentUpon>DayCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Layouts\EventIndicator.xaml.cs">
+      <DependentUpon>EventIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cells\MultiCalendarCell.xaml.cs">
+      <DependentUpon>MultiCalendarCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\XList.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\CalendarCell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\CalendarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\DayCell.xaml">
+    <EmbeddedResource Include="Views\MultiCalendarView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cells\CalendarCell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\EventIndicator.xaml">
+    <EmbeddedResource Include="Views\Cells\DayCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Layouts\EventIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cells\MultiCalendarCell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\CalendarCell.xaml.cs">
-      <DependentUpon>CalendarCell.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CalendarView.xaml.cs">
       <DependentUpon>CalendarView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DayCell.xaml.cs">
-      <DependentUpon>DayCell.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EventIndicator.xaml.cs">
-      <DependentUpon>EventIndicator.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +104,10 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.3.2.0.839982\lib\netstandard1.0\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Cells\" />
+    <Folder Include="Views\Layouts\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets')" />

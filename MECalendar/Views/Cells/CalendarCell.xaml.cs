@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using CalendarTest.Views;
+using MECalendar.Models;
 
 namespace CalendarView
 {
@@ -92,20 +93,5 @@ namespace CalendarView
         }
     }
 
-    public class XList<T> : List<T>
-    {
-        public event EventHandler OnAdd;
-        public event EventHandler OnClear;
-        public void Add(T item)
-        {
-            OnAdd?.Invoke(this, null);
-            base.Add(item);
-        }
 
-        public void Clear()
-        {
-            OnClear?.Invoke(this, null);
-            base.Clear();
-        }
-    }
 }
