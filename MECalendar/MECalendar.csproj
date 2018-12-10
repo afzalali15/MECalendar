@@ -11,16 +11,17 @@
     <RootNamespace>MECalendar</RootNamespace>
     <AssemblyName>MECalendar</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <PackageId>MECalendar</PackageId>
-    <PackageVersion>0.1.1</PackageVersion>
+    <PackageVersion>0.1.2</PackageVersion>
     <Authors>Afzal</Authors>
     <Description>CalendarView with Gregorian, Hijri, and Arabic calendar support. Specailly designed for Middle East languages. Can be used globally for Gregorian calendar</Description>
-    <PackageIconUrl>https://image.ibb.co/kOeuwV/MECalendar.png</PackageIconUrl>
+    <PackageIconUrl>https://i.ibb.co/s9cBY8c/MECalendar.png</PackageIconUrl>
     <Owners>Afzal</Owners>
     <PackageProjectUrl>https://github.com/afzalali15/MECalendar</PackageProjectUrl>
     <Summary>CalendarView with Gregorian, Hijri, and Arabic calendar support. Specially designed for Middle East languages. Can be used globally for Gregorian calendar</Summary>
     <Title>MECalendar</Title>
+    <PackageReleaseNotes>Updated Profile 259</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
