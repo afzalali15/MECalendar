@@ -236,6 +236,8 @@ namespace CalendarView
             set { SetValue(DateSelectedProperty, value); }
         }
 
+        public event EventHandler<DateSelectionArgs> OnDateSelected;
+
         public static readonly BindableProperty MonthChangedProperty = BindableProperty.Create(
             nameof(MonthChanged),
             typeof(ICommand),
@@ -416,6 +418,7 @@ namespace CalendarView
             //arg.SelectedDate = DateTime.Today;
             //arg.Events = Events.Where(events => events.EventDate.Equals(DateTime.Today)).ToList();
             //DateSelected?.Execute(arg);
+            //OnDateSelected?.Invoke(this, arg);
 
             //reset last selected info
             indexOfLastSelectedDate = 0;
@@ -472,6 +475,7 @@ namespace CalendarView
                     indexOfLastSelectedDate = grd_calendar.Children.IndexOf(arg1 as CalendarCell);
                     (arg1 as CalendarCell).Color = SelectedDayColor;
                     DateSelected?.Execute(arg);
+                    OnDateSelected?.Invoke(this, arg);
                 }));
 
                 calendarCell.Day = i.ToString();
@@ -566,6 +570,7 @@ namespace CalendarView
                     (arg1 as CalendarCell).Color = SelectedDayColor;
                     //OnDateSelected?.Invoke(arg1, arg);
                     DateSelected?.Execute(arg);
+                    OnDateSelected?.Invoke(this, arg);
                 }));
 
                 calendarCell.Day = GetArabicNumbers(i.ToString());
@@ -649,6 +654,7 @@ namespace CalendarView
                     (arg1 as CalendarCell).Color = SelectedDayColor;
                     //OnDateSelected?.Invoke(arg1, arg);
                     DateSelected?.Execute(arg);
+                    OnDateSelected?.Invoke(this, arg);
                 }));
 
                 calendarCell.Day = GetArabicNumbers(i.ToString());

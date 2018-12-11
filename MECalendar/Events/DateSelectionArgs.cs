@@ -12,5 +12,6 @@ namespace CalendarView
     {
         public DateTime SelectedDate { get; set; }
         public List<CalendarEvent> Events { get; set; }
+        public object Tag { get; set; }
     }
 }
