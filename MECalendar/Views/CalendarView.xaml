@@ -26,23 +26,25 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    HorizontalOptions="End"
                     Orientation="Horizontal">
                     <Button
                         Clicked="Handle_PreviousClicked"
-                        HorizontalOptions="End"
+                        WidthRequest="30"
                         BackgroundColor="Transparent"
+                        TextColor="#0099ff"
                         Text="&lt;" />
                     <Button
                         x:Name="lbl_today"
                         Clicked="Handle_TodayClicked"
+                        BackgroundColor="Transparent"
                         FontAttributes="Bold"
-                        HorizontalOptions="End"
+                        TextColor="#0099ff"
                         VerticalOptions="Center" />
                     <Button
                         Clicked="Handle_NextClicked"
-                        HorizontalOptions="End"
+                        WidthRequest="30"
                         BackgroundColor="Transparent"
+                        TextColor="#0099ff"
                         Text="&gt;" />
                 </StackLayout>
             </Grid>
