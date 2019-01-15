@@ -16,7 +16,29 @@ namespace CalendarView
 {
     public partial class CalendarView : ContentView
     {
+        Color DisabledDatesColor = Color.Black.MultiplyAlpha(0.5);
+
         #region Properties
+        public bool DisablePreviousDates
+        {
+            get { return (bool)GetValue(DisablePreviousDatesProperty); }
+            set { SetValue(DisablePreviousDatesProperty, value); }
+        }
+
+        public static BindableProperty DisablePreviousDatesProperty = BindableProperty.Create(
+            nameof(DisablePreviousDates),
+            typeof(bool),
+            typeof(CalendarView),
+            false,
+            propertyChanged: DisablePreviousDatesChanged
+        );
+
+        static void DisablePreviousDatesChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var control = (CalendarView)bindable;
+            control.DisablePreviousDates = (bool)newValue;
+        }
+
         public Color DayColor
         {
             get { return (Color)GetValue(DayColorProperty); }
@@ -459,40 +481,27 @@ namespace CalendarView
             for (int i = 1; i <= daysInMonth; i++)
             {
                 var calendarCell = grd_calendar.Children.ElementAt(index) as CalendarCell;
-
                 calendarCell.GestureRecognizers.Clear();
-                calendarCell.GestureRecognizers.Add(new TapGestureRecognizer((View arg1, object arg2) =>
-                {
-                    if (indexOfLastSelectedDate != 0)
-                    {
-                        var prevSelectedCell = grd_calendar.Children.ElementAt(indexOfLastSelectedDate) as CalendarCell;
-                        prevSelectedCell.Color = colorOfLastSelectedDate;
-                    }
-                    var arg = new DateSelectionArgs();
-                    arg.SelectedDate = (arg1 as CalendarCell).Date;
-                    arg.Events = (arg1 as CalendarCell).Events;
-                    colorOfLastSelectedDate = (arg1 as CalendarCell).Color;
-                    indexOfLastSelectedDate = grd_calendar.Children.IndexOf(arg1 as CalendarCell);
-                    (arg1 as CalendarCell).Color = SelectedDayColor;
-                    DateSelected?.Execute(arg);
-                    OnDateSelected?.Invoke(this, arg);
-                }));
+
+                AddEvent(ref calendarCell);
 
                 calendarCell.Day = i.ToString();
+                calendarCell.Date = firstDayOfMonth;
 
                 #region Event Assignment
-                calendarCell.Date = firstDayOfMonth;
                 var eventForThisDay = Events.Where(evnt => evnt.EventDate == firstDayOfMonth);
                 for (int j = 0; j < eventForThisDay.Count(); j++)
                 {
                     calendarCell.Events.Add(eventForThisDay.ElementAt(j));
                     cellIndexesToClean.Add(index);
                 }
-                firstDayOfMonth = firstDayOfMonth.AddDays(1);
                 #endregion
 
+                firstDayOfMonth = firstDayOfMonth.AddDays(1);
 
-                if (columnIndexOfWeekend.Contains(index % 7))
+                if (DisablePreviousDates && calendarCell.Date < DateTime.Now.Date)
+                    calendarCell.Color = DisabledDatesColor;
+                else if (columnIndexOfWeekend.Contains(index % 7))
                     calendarCell.Color = WeekendDayColor;
                 else
                     calendarCell.Color = DayColor;
@@ -510,6 +519,7 @@ namespace CalendarView
 
             Debug.WriteLine("Time taken to render entire calendar view : " + stopwatch.ElapsedMilliseconds);
         }
+
 
         void PopulateHijriCalendar(int monthsToAdd)
         {
@@ -553,30 +563,14 @@ namespace CalendarView
                 var rowFactor = Math.Floor(index / 7.0);
                 var reverseIndex = Convert.ToInt32((7 * rowFactor) + (6 - index % 7));
                 var calendarCell = grd_calendar.Children.ElementAt(reverseIndex) as CalendarCell;
-
                 calendarCell.GestureRecognizers.Clear();
-                calendarCell.GestureRecognizers.Add(new TapGestureRecognizer((View arg1, object arg2) =>
-                {
-                    if (indexOfLastSelectedDate != 0)
-                    {
-                        var prevSelectedCell = grd_calendar.Children.ElementAt(indexOfLastSelectedDate) as CalendarCell;
-                        prevSelectedCell.Color = colorOfLastSelectedDate;
-                    }
-                    var arg = new DateSelectionArgs();
-                    arg.SelectedDate = (arg1 as CalendarCell).Date;
-                    arg.Events = (arg1 as CalendarCell).Events;
-                    colorOfLastSelectedDate = (arg1 as CalendarCell).Color;
-                    indexOfLastSelectedDate = grd_calendar.Children.IndexOf(arg1 as CalendarCell);
-                    (arg1 as CalendarCell).Color = SelectedDayColor;
-                    //OnDateSelected?.Invoke(arg1, arg);
-                    DateSelected?.Execute(arg);
-                    OnDateSelected?.Invoke(this, arg);
-                }));
+
+                AddEvent(ref calendarCell);
 
                 calendarCell.Day = GetArabicNumbers(i.ToString());
+                calendarCell.Date = firstDayOfMonth;
 
                 #region Event Assignmenlbl_montht
-                calendarCell.Date = firstDayOfMonth;
                 var eventForThisDay = Events.Where(evnt => evnt.EventDate.Date == firstDayOfMonth.Date);
                 for (int j = 0; j < eventForThisDay.Count(); j++)
                 {
@@ -637,30 +631,14 @@ namespace CalendarView
                 var rowFactor = Math.Floor(index / 7.0);
                 var reverseIndex = Convert.ToInt32((7 * rowFactor) + (6 - index % 7));
                 var calendarCell = grd_calendar.Children.ElementAt(reverseIndex) as CalendarCell;
-
                 calendarCell.GestureRecognizers.Clear();
-                calendarCell.GestureRecognizers.Add(new TapGestureRecognizer((View arg1, object arg2) =>
-                {
-                    if (indexOfLastSelectedDate != 0)
-                    {
-                        var prevSelectedCell = grd_calendar.Children.ElementAt(indexOfLastSelectedDate) as CalendarCell;
-                        prevSelectedCell.Color = colorOfLastSelectedDate;
-                    }
-                    var arg = new DateSelectionArgs();
-                    arg.SelectedDate = (arg1 as CalendarCell).Date;
-                    arg.Events = (arg1 as CalendarCell).Events;
-                    colorOfLastSelectedDate = (arg1 as CalendarCell).Color;
-                    indexOfLastSelectedDate = grd_calendar.Children.IndexOf(arg1 as CalendarCell);
-                    (arg1 as CalendarCell).Color = SelectedDayColor;
-                    //OnDateSelected?.Invoke(arg1, arg);
-                    DateSelected?.Execute(arg);
-                    OnDateSelected?.Invoke(this, arg);
-                }));
+
+                AddEvent(ref calendarCell);
 
                 calendarCell.Day = GetArabicNumbers(i.ToString());
+                calendarCell.Date = firstDayOfMonth;
 
                 #region Event Assignment
-                calendarCell.Date = firstDayOfMonth;
                 var eventForThisDay = Events.Where(evnt => evnt.EventDate.Date == firstDayOfMonth.Date);
                 for (int j = 0; j < eventForThisDay.Count(); j++)
                 {
@@ -687,6 +665,29 @@ namespace CalendarView
             }
 
             Debug.WriteLine("Time taken to render entire calendar view : " + stopwatch.ElapsedMilliseconds);
+        }
+
+        void AddEvent(ref CalendarCell calendarCell)
+        {
+            calendarCell.GestureRecognizers.Add(new TapGestureRecognizer((View arg1, object arg2) =>
+            {
+                if (DisablePreviousDates && (arg1 as CalendarCell).Date < DateTime.Now.Date)
+                    return;
+
+                if (indexOfLastSelectedDate != 0)
+                {
+                    var prevSelectedCell = grd_calendar.Children.ElementAt(indexOfLastSelectedDate) as CalendarCell;
+                    prevSelectedCell.Color = colorOfLastSelectedDate;
+                }
+                var arg = new DateSelectionArgs();
+                arg.SelectedDate = (arg1 as CalendarCell).Date;
+                arg.Events = (arg1 as CalendarCell).Events;
+                colorOfLastSelectedDate = (arg1 as CalendarCell).Color;
+                indexOfLastSelectedDate = grd_calendar.Children.IndexOf(arg1 as CalendarCell);
+                (arg1 as CalendarCell).Color = SelectedDayColor;
+                DateSelected?.Execute(arg);
+                OnDateSelected?.Invoke(this, arg);
+            }));
         }
 
         int GetFirstDateIndex(DayOfWeek dayOfWeek)

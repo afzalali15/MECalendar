@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentView
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -21,16 +21,18 @@
                     Width="Auto" />
             </Grid.ColumnDefinitions>
             <BoxView
+                CornerRadius="8"
                 x:Name="DateBackground"
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.RowSpan="2"
                 Grid.ColumnSpan="2"
-                HeightRequest="48"
-                WidthRequest="48" />
+                HeightRequest="42"
+                WidthRequest="42" />
             <Label
                 x:Name="lbl_day"
                 HorizontalOptions="Center"
+                VerticalOptions="Center"
                 Text="28"
                 Grid.Row="0"
                 Grid.Column="0"
